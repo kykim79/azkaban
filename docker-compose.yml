@@ -46,7 +46,7 @@ services:
                 ipv4_address: "172.20.0.4"
 
     azkaban-web:
-        image: inovvo/azkaban-web:3.32.1
+        image: ktoy/azkaban-web:3.32.1
         depends_on:
             - azkaban-exec
         restart: always
@@ -55,6 +55,7 @@ services:
             - 8443:8443
         volumes:
             - ./data/app/azkaban/conf/:/azkaban/conf/
+            - ./data/app/azkaban/plugins/:/azkaban/plugins/
             - azkaban-boot:/tmp/boot
         command: bash -c " while [ ! -f /tmp/boot/azkaban-web.flag ]; do sleep 2; done && bin/azkaban-web-start.sh && tail --pid=`cat currentpid` -f /dev/null"
         networks:
